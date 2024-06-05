@@ -1,11 +1,11 @@
 <?php
 
 error_reporting(0);
-session_start(); // Start the session
-error_reporting(0); // Turn off error reporting (note: this is usually not recommended in production)
+session_start(); 
+error_reporting(0); 
 
 
-$host = "localhost:3307"; // Corrected port syntax
+$host = "localhost:3307"; 
 $user = "root";
 $password = "";
 $db = "schoolproject";
@@ -15,13 +15,13 @@ if ($data === false) {
     die("connection error");
 }
 
-// Use the correct superglobal variable $_SERVER
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Escape user inputs to reduce SQL injection risk, but use prepared statements as a best practice
+    
     $name = mysqli_real_escape_string($data, $_POST['username']);
     $pass = mysqli_real_escape_string($data, $_POST['password']);
 
-    // Prepare statement to prevent SQL injection
+    
     $sql = "SELECT * FROM user WHERE username=? AND password=?";
     $stmt = mysqli_prepare($data, $sql);
     if ($stmt) {
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
 
-        // Fetch the user data
+       
         $row = mysqli_fetch_assoc($result);
         if ($row) {
             if ($row["usertype"] == "student") {

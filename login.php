@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Login Form</title>
     <style>
-        /* Set background only on the html to cover the entire page */
+        
         html {
             height: 100%;
             background: url('School-children-wearing-school-uniforms.webp') no-repeat center center fixed;
@@ -16,7 +16,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: transparent; /* Ensure body has no additional background settings */
+            background: transparent; 
         }
         .center-text {
             background: rgba(255, 255, 255, 0.8);
@@ -46,10 +46,11 @@
     <div class="center-text">
         <h4>Login Form</h4>
         <?php
-        // Display the session message if it exists
+
+        
         if (isset($_SESSION['loginMessage'])) {
             echo "<p>" . $_SESSION['loginMessage'] . "</p>";
-            unset($_SESSION['loginMessage']); // Clear message after displaying
+            unset($_SESSION['loginMessage']); 
         }
         ?>
         <form action="login_check.php" method="post">

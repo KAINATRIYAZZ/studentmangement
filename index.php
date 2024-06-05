@@ -1,19 +1,26 @@
 <?php
-
 error_reporting(0);
 session_start();
-session_destroy();
 
-
-if($_SESSION['message'])
- {
+if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];
+    echo "<script type='text/javascript'>alert('$message');</script>";
+    unset($_SESSION['message']); 
+}
 
-    echo "<script type='text/javascript'>
-    alert('$message');
-    </script>";
-    }
+$host = "localhost:3307";
+$user = "root";
+$password = "";
+$db = "schoolproject";
 
+$data = mysqli_connect($host, $user, $password, $db);
+
+if (!$data) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$sql = "SELECT * FROM teacher";
+$result = mysqli_query($data, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -58,18 +65,18 @@ if($_SESSION['message'])
     <h1 class="center-text">Our Teachers</h1>
     <div class="container">
         <div class="row">
+
+<?php
+while ($info = mysqli_fetch_assoc($result)) {
+?>
             <div class="col-md-4">
-                <img class="img-responsive" src="1666760590521.jpg" alt="Teacher 1">
-                <p>Explore its features to create engaging learning experiences & celebrate student achievements in a whole new way.</p>
+                <img class="img-responsive" src="<?php echo $info['image']; ?>" alt="Teacher Image">
+                <h3><?php echo $info['name']; ?></h3>
+                <h5><?php echo $info['description']; ?></h5>
             </div>
-            <div class="col-md-4">
-                <img class="img-responsive" src="Important-Facts-About-Our-Teachers.jpg" alt="Teacher 2">
-                <p>Explore its features to create engaging learning experiences & celebrate student achievements in a whole new way.</p>
-            </div>
-            <div class="col-md-4">
-                <img class="img-responsive" src="professor-pointing-college-student-hand-260nw-1836272266.jpg" alt="Teacher 3">
-                <p>Explore its features to create engaging learning experiences & celebrate student achievements in a whole new way.</p>
-            </div>
+<?php
+}
+?>
         </div>
     </div>
 
@@ -96,19 +103,19 @@ if($_SESSION['message'])
         <form action="data_check.php" method="POST">
             <div class="form-group">
                 <label class="label_text">Name</label>
-                <input class="form-control input_deg" type="text" name="name">
+                <input class="form-control input_deg" type="text" name="name" required>
             </div>
             <div class="form-group">
                 <label class="label_text">Email</label>
-                <input class="form-control input_deg" type="email" name="email">
+                <input class="form-control input_deg" type="email" name="email" required>
             </div>
             <div class="form-group">
                 <label class="label_text">Phone</label>
-                <input class="form-control input_deg" type="text" name="phone">
+                <input class="form-control input_deg" type="text" name="phone" required>
             </div>
             <div class="form-group">
                 <label class="label_text">Message</label>
-                <textarea class="form-control input_txt" name="message"></textarea>
+                <textarea class="form-control input_txt" name="message" required></textarea>
             </div>
             <div class="form-group">
                 <input class="btn btn-primary" type="submit" value="Apply" name="apply">
